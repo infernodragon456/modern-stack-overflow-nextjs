@@ -1,3 +1,4 @@
+import TagCard from '@/components/cards/TagCard'
 import Image from 'next/image'
 import React from 'react'
 
@@ -26,9 +27,7 @@ const Right = () => {
         <div className='flex flex-col justify-between gap-8 text-dark-100 dark:text-light-700'>
             <h2 className='h2-semibold text-dark-100 dark:text-light-900'>Popular Tags</h2>
             <div className='flex flex-row justify-between items-center'>
-                <div className=' bg-light-400 bg-opacity-10 p-2 rounded-lg px-4'>
-                    <p className='text-sm text-light-500 uppercase'>language</p>
-                </div>
+                <TagCard name='javascript'></TagCard>
                 <p className='text-dark500_light700 text-sm'>4200+</p>
             </div>
 
