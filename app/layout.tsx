@@ -45,12 +45,12 @@ export default function RootLayout({
         footerActionLink: 'primary-text-gradient hover:text-primary-500'
       }
     }}>
-          <SignedOut>
+          {/* <SignedOut>
             <SignInButton />
           </SignedOut>
           <SignedIn>
             <UserButton />
-          </SignedIn>
+          </SignedIn> */}
           <ThemeProvider>
           {children}
           </ThemeProvider>
