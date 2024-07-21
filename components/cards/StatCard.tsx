@@ -6,7 +6,7 @@ const StatCard = ({icon, value, title, textStyles, href, isAuthor}: {icon: strin
 
     const Stats = (
         <>
-                <Image src={icon} width={16} height={16} alt='icon' className={`object-contain ${href ? 'rounded-full' : ''}`}></Image>
+                <Image src={icon} width={16} height={16} alt='icon' className={`object-contain ${href ? 'rounded-full invert-colors' : ''}`}></Image>
                 <p className={`${textStyles} flex items-center gap-1`}>{value} 
                     <span className={`small-regular line-clamp-1 ${isAuthor ? 'max-sm:hidden' : ''}`}>
                         {title}
