@@ -9,7 +9,7 @@ const Ask = async () => {
   let {userId} = auth()
   
   if (!userId) redirect('/sign-in')
-  userId = 'clerk_abc123xyz789'
+  // userId = 'clerk_abc123xyz789'
   const mongoUser = await getUserByID({userId})
   // console.log(mongoUser)  
   return (
