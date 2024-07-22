@@ -2,8 +2,12 @@
 
 import UserModel from "@/database/user.model"
 import { connectToDatabase } from "../mongoose"
+import { CreateUserParams, DeleteUserParams, GetUserByIdParams, UpdateUserParams } from "./shared.types"
+import { revalidatePath } from "next/cache"
+import { error } from "console"
+import QuestionModel from "@/database/question.model"
 
-export async function getUserByID(params:any) {
+export async function getUserByID(params:GetUserByIdParams) {
     try {
         connectToDatabase()
         const {userId} = params
@@ -16,4 +20,51 @@ export async function getUserByID(params:any) {
     } catch (error) {
         console.log(error)
     }    
+}
+
+export async function createUser(userData:CreateUserParams) {
+    try {
+
+        connectToDatabase()
+
+        const newUser = await UserModel.create(userData)
+        return newUser
+    } catch (error) {
+        console.log(error)
+        throw error
+    }
+}
+
+export async function updateUser(userData:UpdateUserParams) {
+    try {
+        connectToDatabase()
+        const {clerkId, updateData, path} = userData
+        await UserModel.findOneAndUpdate({clerkId : clerkId}, updateData, {
+            new: true
+        })
+        revalidatePath(path)
+    } catch (error) {
+        console.log(error)
+        throw error
+    }
+}
+
+export async function deleteUser(userData:DeleteUserParams) {
+    try {
+        connectToDatabase()
+        const {clerkId} = userData
+        const user = await UserModel.findOneAndDelete({clerkId : clerkId})
+        if (!user) {
+            throw new Error('User not found')
+        }
+        //Delete user activity from database
+        const userQuestions = await QuestionModel.find( {author : user._id}).distinct('_id')
+        await QuestionModel.deleteMany({author : user._id})
+
+        const deletedUser = await UserModel.findByIdAndDelete(user._id)
+        return deletedUser
+    } catch (error) {
+        console.log(error)
+        throw error
+    }
 }
