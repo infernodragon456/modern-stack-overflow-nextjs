@@ -5,7 +5,7 @@ import { createUser, deleteUser, updateUser } from '@/lib/actions/user.action'
 import { NextResponse } from 'next/server'
 
 export async function POST(req: Request) {
-
+    console.log(req)
   // You can find this in the Clerk Dashboard -> Webhooks -> choose the endpoint
   const NEXT_CLERK_WEBHOOK_SECRET = process.env.NEXT_CLERK_WEBHOOK_SECRET
 
