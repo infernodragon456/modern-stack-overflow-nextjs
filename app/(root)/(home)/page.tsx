@@ -6,6 +6,8 @@ import QuestionModel from '@/database/question.model'
 import { getQuestions } from '@/lib/actions/question.action'
 import Link from 'next/link'
 import React from 'react'
+import HomeFilter from '@/components/shared/search/HomeFilter'
+import { HomePageFilters } from '@/constants'
 
 export interface tag{
   _id: number,
@@ -44,7 +46,10 @@ const Home = async () => {
         </Link>
       </div>
       <div className='mt-11 flex justify-between gap-5 max-sm:flex-col sm:items-center'>
-          <LocalSearch name='questions'></LocalSearch>
+          <div className='flex flex-row gap-5 items-center relative w-full xl:flex-col'>
+            <LocalSearch name='questions'></LocalSearch>
+            <HomeFilter filters={HomePageFilters}/>
+          </div>
       </div>
       <div className='mt-10 flex w-full flex-col gap-6'>
             {result.questions.length >0  
