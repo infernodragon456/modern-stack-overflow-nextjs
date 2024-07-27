@@ -22,7 +22,7 @@ const StatCard = ({icon, value, title, textStyles, href, isAuthor}: {icon: strin
         )
     }
   return (
-    <div className='flex-center flex-1 gap-2'>
+    <div className=' flex-center flex-wrap gap-2'>
         {Stats}
     </div>
   )

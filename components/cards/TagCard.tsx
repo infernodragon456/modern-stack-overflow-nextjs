@@ -1,10 +1,23 @@
+import Link from 'next/link';
 import React from 'react'
+import { Badge } from "@/components/ui/badge"
 
-const TagCard = ({name} : {name: string}) => {
+interface Props {
+  _id: string | number;
+  name: string;
+  totalQuestions?: number;
+  showCount?: boolean;
+}
+
+const TagCard = ({ _id, name, totalQuestions, showCount }: Props) => {
   return (
-    <div className=' bg-light-400 bg-opacity-10 p-2 rounded-lg px-4'>
-                    <p className='text-sm text-light-500 uppercase'>{name}</p>
-    </div>
+    <Link href={`/tags/${_id}`} className="flex justify-between gap-2">
+      <Badge className="subtle-medium background-light800_dark300 text-light400_light500 rounded-md border-none px-4 py-2 uppercase">{name}</Badge>
+
+      {showCount && (
+        <p className="small-medium text-dark500_light700">{totalQuestions}</p>
+      )}
+    </Link>
   )
 }
 

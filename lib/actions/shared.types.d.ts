@@ -1,7 +1,7 @@
 import { Schema } from "mongoose";
  import { IUser } from "@/mongodb";
  export interface CreateAnswerParams {
-  description: string;
+  answer: string;
   author: string; // User ID
   question: string; // Question ID
   path: string;

@@ -7,6 +7,7 @@ import {
   UserButton
 } from '@clerk/nextjs'
 import './globals.css'
+import '../styles/prism.css'
 import {Inter, Space_Grotesk} from 'next/font/google'
 import type { Metadata } from 'next'
 import { ThemeProvider } from '@/context/ThemeProvider'
