@@ -5,7 +5,7 @@ import mongoose from "mongoose"
 import QuestionModel from "@/database/question.model"
 import { connectToDatabase } from "../mongoose"
 import TagModel from "@/database/tag.model"
-import { string } from "zod"
+import { any, string } from "zod"
 import { CreateQuestionParams, GetQuestionByIdParams, GetQuestionsParams, QuestionVoteParams } from "./shared.types"
 import UserModel from "@/database/user.model"
 import { revalidatePath } from "next/cache"
@@ -116,17 +116,17 @@ export async function downvoteQuestion(params:QuestionVoteParams) {
 
         if (hasdownVoted) {
             // Remove userId from downvotes
-            question.downvotes = question.downvotes.filter(id => !id.equals(userId));
+            question.downvotes = question.downvotes.filter((id: any) => !id.equals(userId));
           } else if (hasupVoted) {
             // Add userId to downvotes
-            if (!question.downvotes.some(id  => id.equals(userId))) {
+            if (!question.downvotes.some((id: any)  => id.equals(userId))) {
               question.downvotes.push(userId);
             }
             // Remove userId from upvotes
-            question.upvotes = question.upvotes.filter(id => !id.equals(userId));
+            question.upvotes = question.upvotes.filter((id: any) => !id.equals(userId));
           } else {
             // Add userId to downvotes if not already present
-            if (!question.downvotes.some(id => id.equals(userId))) {
+            if (!question.downvotes.some((id: any) => id.equals(userId))) {
               question.downvotes.push(userId);
             }
           }
