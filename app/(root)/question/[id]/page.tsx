@@ -13,6 +13,7 @@ import Answer from '@/components/forms/Answer'
 import { auth } from '@clerk/nextjs/server'
 import { getUserByID } from '@/lib/actions/user.action'
 import AllAnswers from '@/components/shared/AllAnswers'
+import Votes from '@/components/shared/Votes'
 
 interface QuestionPost extends Omit<IQuestion, 'author' | 'tags'> {
     author : {
@@ -33,8 +34,13 @@ const QuestionPage = async ({params} : {params : any}) => {
     const {userId : clerkId} = auth()
     let mongoUser
     if (clerkId) {
+        console.log(clerkId);
         mongoUser = await getUserByID({userId: clerkId})
+        console.log("hi")
+
     }
+    console.log("mongoUser",mongoUser);
+    console.log(clerkId)
     
   return (
     <>
@@ -45,7 +51,16 @@ const QuestionPage = async ({params} : {params : any}) => {
                     </Image>
                     <p className='paragraph-semibold text-dark300_light700'>{question.author.name} </p>
                 </Link>
-                <div className='flex justify-end'>VOTING</div>
+                <div className='flex justify-end'>
+                    <Votes type='question' 
+                    itemId={params.id} 
+                    userId={JSON.stringify(mongoUser)} 
+                    upvotes={question.upvotes.length} 
+                    downvotes={question.downvotes.length} 
+                    hasUpvoted={question.upvotes.includes(mongoUser)} 
+                    hasDownvoted={question.downvotes.includes(mongoUser)} 
+                    hasSaved={mongoUser?.saved.includes(question._id)} ></Votes>
+                </div>
             </div>
             <h2 className='h2-semibold text-dark200_light900'>{question.title}</h2>
         </div>
@@ -62,8 +77,8 @@ const QuestionPage = async ({params} : {params : any}) => {
             ))}
         </div>
 
-         <AllAnswers questionId={params.id} author={mongoUser._id} totalAnswers = {question.answers.length}></AllAnswers>   
-        <Answer questionId={params.id} author={mongoUser._id}></Answer>
+        <AllAnswers questionId={params.id} author={mongoUser} totalAnswers = {question.answers.length}></AllAnswers>   
+        <Answer questionId={params.id} author={mongoUser}></Answer> 
     </>
     
   )
